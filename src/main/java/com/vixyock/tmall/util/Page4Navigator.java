@@ -8,13 +8,13 @@ public class Page4Navigator<T> {
     Page<T> pageFromJPA;    //JPA默认提供的分页类
     int navigatePages;  //导航页码数，即分页中显示的页数量
 
-    int totalPages;
-    int number;
-    long totalElements;
-    int size;
-    int numberOfElements;
+    int totalPages;     //总页数
+    int number;         //当前页
+    long totalElements; //共多少条数据
+    int size;           //每页数据数
+    int numberOfElements;//当前页有多少条数据
 
-    List<T> content;
+    List<T> content;    //数据集合
 
     boolean isHasContent;
     boolean first;
