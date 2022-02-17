@@ -1,14 +1,15 @@
 <div class="pageDiv" th:fragment="html">
 	<nav>
+<!--		#nowhere表示点击后不会跳转-->
 	  <ul class="pagination">
 	    <li :class="{ disabled: pagination.first }">
 	      <a  href="#nowhere" @click="jump('first')"><<</a>
 	    </li>
 	    <li :class="{ disabled: !pagination.hasPrevious }">
 	      <a  href="#nowhere" @click="jump('pre')"><</a>
-	    </li>		    
+	    </li>
 
-		<li  v-for="i in pagination.navigatepageNums">
+		<li  v-for="i in pagination.navigatePageNums">
 			<a href="#nowhere" @click="jumpByNumber(i-1)" >
 				{{i}}
 			</a>

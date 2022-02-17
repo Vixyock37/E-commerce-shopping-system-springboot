@@ -24,7 +24,7 @@ public class CategoryController {
         start = start < 0 ? 0 : start;
         Page4Navigator<Category> page = categoryService.list(start, size, 5);
         //5表示导航分页最多有5个，像 [1,2,3,4,5] 这样
-//        System.out.println(page.toString());
+//        System.out.println(page.getContent());
         return page;
     }
 }

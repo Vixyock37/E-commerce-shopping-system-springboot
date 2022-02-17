@@ -5,6 +5,7 @@
 <body>
 <div th:replace="include/admin/adminNavigator::html" ></div>
 <script>
+    //jQuery代码，表示html加载完后执行
     $(function(){
         var data4Vue = {
             uri:'categories',
@@ -17,6 +18,7 @@
             el: '#workingArea',
             data: data4Vue,
             mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+                //表示vue对象加载完成后执行
                 this.list(0);
             },
             methods: {
