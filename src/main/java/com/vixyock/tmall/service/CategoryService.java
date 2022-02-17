@@ -29,4 +29,8 @@ public class CategoryService {
         Sort sort = new Sort(Sort.Direction.ASC, "id");
         return categoryDAO.findAll(sort);
     }
+
+    public void add(Category bean) {
+        categoryDAO.save(bean);
+    }
 }
