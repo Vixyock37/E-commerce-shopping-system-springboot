@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdminPageController {
+    //分类管理Category
     @GetMapping(value = "/admin")
     public String admin(){
         return "redirect:admin_category_list";
@@ -17,4 +18,10 @@ public class AdminPageController {
     }
     @GetMapping(value = "/admin_category_edit")
     public String editCategory(){ return "admin/editCategory"; }
+    //分类属性管理Property
+    @GetMapping(value = "/admin_property_list")
+    public String listProperty(){return "admin/listProperty";}
+    @GetMapping(value = "/admin_property_edit")
+    public String editProperty(){return "admin/editProperty";}
+
 }
