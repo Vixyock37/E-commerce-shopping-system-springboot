@@ -9,7 +9,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class PropertyService {
     @Autowired
     PropertyDAO propertyDAO;
@@ -35,7 +39,7 @@ public class PropertyService {
     public Page4Navigator<Property> list(int cid, int start, int size, int navigatePages) {
         Category category = categoryService.get(cid);
 
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
         Pageable pageable = new PageRequest(start, size, sort);
 
         Page<Property> pageFromJPA =propertyDAO.findByCategory(category,pageable);

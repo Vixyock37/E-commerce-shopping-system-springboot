@@ -5,7 +5,29 @@
 <body>
 <div th:replace="include/admin/adminNavigator::html" ></div>
 <script>
+    $(function (){
+        var data4Vue={
+            uri:'properties',
+            beans:[]
+        }
 
+        //ViewModel
+        var vue = new Vue({
+            el:'workingArea',
+            data:data4Vue,
+            mounted:function(){
+                this.list();
+            },
+        methods:{
+            list:function (){
+                var url = this.uri;
+                axios.get(url).then(function (response){
+                    vue.beans=response.data.content;
+                })
+            }
+        }
+        })
+    })
 </script>
 <div id="workingArea">
 
