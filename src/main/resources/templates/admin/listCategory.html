@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="include/admin/adminHeader::html('分类管理')" ></head>
+<head th:include="include/admin/adminHeader::html('分类管理')"></head>
 <body>
-<div th:replace="include/admin/adminNavigator::html" ></div>
+<div th:replace="include/admin/adminNavigator::html"></div>
 <script>
     //jQuery代码，表示html加载完后执行
-    $(function(){
+    $(function () {
         var data4Vue = {
             uri: 'categories',
             pagination: {},
@@ -31,32 +31,44 @@
                         vue.beans = response.data.content;
                     });
                 },
-                jump: function(page){
-                    jump(page,vue); //定义在adminHeader.html 中
+                jump: function (page) {
+                    jump(page, vue); //定义在adminHeader.html 中
                 },
                 jumpByNumber: function (start) {
                     jumpByNumber(start, vue);
                 },
-                getFile:function (event) {
-                    this.file=event.target.files[0];
+                getFile: function (event) {
+                    this.file = event.target.files[0];
                 },
-                add:function (){
-                    if(!checkEmpty(this.bean.name,"分类名称"))
+                add: function () {
+                    if (!checkEmpty(this.bean.name, "分类名称"))
                         return;
-                    if(!checkEmpty(this.file,"分类图片"))
+                    if (!checkEmpty(this.file, "分类图片"))
                         return;
                     var url = this.uri;
                     //axios.js上传文件要用formData
                     var formData = new FormData();
-                    formData.append("image",this.file);
-                    formData.append("name",this.bean.name);
-                    axios.post(url,formData).then(function(response){
+                    formData.append("image", this.file);
+                    formData.append("name", this.bean.name);
+                    axios.post(url, formData).then(function (response) {
                         vue.list(0);
-                        vue.bean={id:0,name:"",hp:'0'};
+                        vue.bean = {id: 0, name: "", hp: '0'};
                         $("#categoryPic").val("");
-                        vue.file=null;
+                        vue.file = null;
                     })
-                }
+                },
+                deleteBean:function (id){
+                    if(!checkDeleteLink())
+                        return;
+                    var url=this.uri+"/"+id;
+                    axios.delete(url).then(function (response){
+                        if(0!=response.data.length){
+                            alert(response.data);
+                        }else{
+                            vue.list(0);
+                        }
+                    });
+                },
             }
         });
     });
@@ -83,22 +95,25 @@
             <tr v-for="bean in beans ">
                 <td>{{bean.id}}</td>
                 <td>
-                    <img height="40px"  :src="'img/category/'+bean.id+'.jpg'">
+                    <img height="40px" :src="'img/category/'+bean.id+'.jpg'">
                 </td>
                 <td>
                     {{bean.name}}
                 </td>
                 <td>
-                    <a :href="'admin_property_list?cid=' + bean.id "><span class="glyphicon glyphicon-th-list"></span></a>
+                    <a :href="'admin_property_list?cid=' + bean.id "><span
+                            class="glyphicon glyphicon-th-list"></span></a>
                 </td>
                 <td>
-                    <a :href="'admin_product_list?cid=' + bean.id "><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                    <a :href="'admin_product_list?cid=' + bean.id "><span
+                            class="glyphicon glyphicon-shopping-cart"></span></a>
                 </td>
                 <td>
                     <a :href="'admin_category_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
                 </td>
                 <td>
-                    <a href="#nowhere"  @click="deleteBean(bean.id)"><span class="   glyphicon glyphicon-trash"></span></a>
+                    <a href="#nowhere" @click="deleteBean(bean.id)"><span
+                            class="   glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr>
             </tbody>
@@ -111,23 +126,23 @@
             <table class="addTable">
                 <tr>
                     <td>分类名称</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
+                    <td><input @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>分类图片</td>
                     <td>
-                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />
+                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)"/>
                     </td>
                 </tr>
                 <tr class="submitTR">
                     <td colspan="2" align="center">
-                        <a href="#nowhere"  @click="add" class="btn btn-success">提交</a>
+                        <a href="#nowhere" @click="add" class="btn btn-success">提交</a>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
 </div>
-<div th:replace="include/admin/adminFooter::html" ></div>
+<div th:replace="include/admin/adminFooter::html"></div>
 </body>
 </html>
