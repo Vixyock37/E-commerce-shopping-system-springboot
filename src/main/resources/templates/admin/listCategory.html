@@ -101,19 +101,16 @@
                     {{bean.name}}
                 </td>
                 <td>
-                    <a :href="'admin_property_list?cid=' + bean.id "><span
-                            class="glyphicon glyphicon-th-list"></span></a>
+                    <a :href="'admin_property_list?cid=' + bean.id "><span class="glyphicon glyphicon-th-list"></span></a>
                 </td>
                 <td>
-                    <a :href="'admin_product_list?cid=' + bean.id "><span
-                            class="glyphicon glyphicon-shopping-cart"></span></a>
+                    <a :href="'admin_product_list?cid=' + bean.id "><span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </td>
                 <td>
                     <a :href="'admin_category_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
                 </td>
                 <td>
-                    <a href="#nowhere" @click="deleteBean(bean.id)"><span
-                            class="   glyphicon glyphicon-trash"></span></a>
+                    <a href="#nowhere" @click="deleteBean(bean.id)"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr>
             </tbody>

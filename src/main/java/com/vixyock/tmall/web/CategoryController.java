@@ -59,4 +59,10 @@ public class CategoryController {
         file.delete();
         return null;
     }
+
+    @GetMapping("categories/{id}")
+    public Category get(@PathVariable("id") int id){
+        Category bean = categoryService.get(id);
+        return bean;
+    }
 }

@@ -28,19 +28,6 @@
                         vue.bean = response.data;
                     })
                 },
-                update:function () {
-                    if(!checkEmpty(this.bean.name, "分类名称"))
-                        return;
-                    var url = this.uri+"/"+this.bean.id;
-
-                    //axios.js 上传文件要用 formData 这种方式
-                    var formData = new FormData();
-                    formData.append("image", this.file);
-                    formData.append("name", this.bean.name);
-                    axios.put(url,formData).then(function(response){
-                        location.href=vue.listURL;
-                    });
-                },
                 getFile: function (event) {
                     this.file = event.target.files[0];
                 }
