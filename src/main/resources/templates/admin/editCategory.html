@@ -28,6 +28,18 @@
                         vue.bean = response.data;
                     })
                 },
+                update:function (){
+                    if (!checkEmpty(this.bean.name, "分类名称"))
+                        return;
+
+                    var url = this.uri+"/"+this.bean.id;
+                    var formData = new FormData();
+                    formData.append("image", this.file);
+                    formData.append("name", this.bean.name);
+                    axios.put(url,formData).then(function(response){
+                        location.href=vue.listURL;
+                    });
+                },
                 getFile: function (event) {
                     this.file = event.target.files[0];
                 }
@@ -54,7 +66,7 @@
                 <tr>
                     <td>分类图片</td>
                     <td>
-                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />
+                        <input id="categoryPic" accept="image/*"  type="file" name="image" @change="getFile($event)" />
                     </td>
                 </tr>
                 <tr class="submitTR">

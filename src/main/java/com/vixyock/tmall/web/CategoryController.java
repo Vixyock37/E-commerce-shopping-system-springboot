@@ -36,11 +36,11 @@ public class CategoryController {
     @PostMapping("/categories")
     public Object add(Category bean, MultipartFile image, HttpServletRequest request) throws IOException {
         categoryService.add(bean);
-        saveOrUpadateImageFile(bean, image, request);
+        saveOrUpdateImageFile(bean, image, request);
         return bean;
     }
 
-    public void saveOrUpadateImageFile(Category bean, MultipartFile image, HttpServletRequest request)
+    public void saveOrUpdateImageFile(Category bean, MultipartFile image, HttpServletRequest request)
             throws IOException {
         File imageFolder = new File(request.getServletContext().getRealPath("img/category"));
         File file = new File(imageFolder, bean.getId() + ".jpg");
@@ -63,6 +63,18 @@ public class CategoryController {
     @GetMapping("categories/{id}")
     public Category get(@PathVariable("id") int id){
         Category bean = categoryService.get(id);
+        return bean;
+    }
+
+    @PutMapping("/categories/{id}")
+    public Object update(Category bean, MultipartFile image,HttpServletRequest request) throws Exception {
+        String name = request.getParameter("name");
+        bean.setName(name);
+        categoryService.update(bean);
+
+        if(image!=null) {
+            saveOrUpdateImageFile(bean, image, request);
+        }
         return bean;
     }
 }
