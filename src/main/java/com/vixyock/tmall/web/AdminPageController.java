@@ -29,4 +29,7 @@ public class AdminPageController {
     public String listProduct(){ return "admin/listProduct"; }
     @GetMapping(value = "/admin_product_edit")
     public String editProduct(){ return "admin/editProduct"; }
+    //用户管理
+    @GetMapping(value = "admin_user_list")
+    public String listUser(){return "admin/listUser";}
 }
