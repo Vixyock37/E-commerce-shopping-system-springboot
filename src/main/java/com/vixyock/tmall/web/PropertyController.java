@@ -7,10 +7,7 @@ import com.vixyock.tmall.service.PropertyService;
 import com.vixyock.tmall.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,11 @@ public class PropertyController {
         start = start < 0 ? 0 : start;
         Page4Navigator<Property> page = propertyService.list(cid, start, size, 5);
         return page;
+    }
+
+    @PostMapping("/properties")
+    public Object add(@RequestBody Property bean) throws Exception {
+        propertyService.add(bean);
+        return bean;
     }
 }
