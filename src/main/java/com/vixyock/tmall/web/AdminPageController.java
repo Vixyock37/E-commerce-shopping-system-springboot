@@ -17,4 +17,9 @@ public class AdminPageController {
     }
     @GetMapping(value = "/admin_category_edit")
     public String editCategory(){ return "admin/editCategory"; }
+    //产品管理
+    @GetMapping(value = "admin_product_list")
+    public String listProduct(){ return "admin/listProduct"; }
+    @GetMapping(value = "/admin_product_edit")
+    public String editProduct(){ return "admin/editProduct"; }
 }
