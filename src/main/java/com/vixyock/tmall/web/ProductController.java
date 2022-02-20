@@ -40,4 +40,10 @@ public class ProductController {
         productService.add(bean);
         return bean;
     }
+
+    @DeleteMapping("/products/{id}")
+    public String delete(@PathVariable("id") int id){
+        productService.delete(id);
+        return null;
+    }
 }

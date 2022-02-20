@@ -36,4 +36,8 @@ public class ProductService {
     public void update(Product bean) {
         productDAO.save(bean);
     }
+
+    public void delete(int id){
+        productDAO.delete(id);
+    }
 }

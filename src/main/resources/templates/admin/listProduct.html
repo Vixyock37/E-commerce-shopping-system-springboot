@@ -11,7 +11,15 @@
             pagination: {},
             beans: [],
             category: '',
-            bean: {id:0,name:'','subTitle':'','originalPrice':99.98,'promotePrice':19.98,'stock':99,category:{'id':0}},
+            bean: {
+                id: 0,
+                name: '',
+                'subTitle': '',
+                'originalPrice': 99.98,
+                'promotePrice': 19.98,
+                'stock': 99,
+                category: {'id': 0}
+            },
         };
 
         //ViewModel
@@ -36,8 +44,8 @@
                         vue.beans = response.data.content;
                     });
                 },
-                add:function (){
-                    if(!checkEmpty(this.bean.name, "产品名称"))
+                add: function () {
+                    if (!checkEmpty(this.bean.name, "产品名称"))
                         return;
                     if (!checkEmpty(this.bean.subTitle, "小标题"))
                         return;
@@ -49,17 +57,36 @@
                         return;
 
                     var url = this.uri;
-                    this.bean.category.id=cid;
-                    axios.post(url,this.bean).then(function(response){
+                    this.bean.category.id = cid;
+                    axios.post(url, this.bean).then(function (response) {
                         vue.list(0);
-                        vue.bean =  {id:0,name:'','subTitle':'','originalPrice':99.98,'promotePrice':19.98,'stock':99,category:{'id':0}};
-                    })
+                        vue.bean = {
+                            id: 0,
+                            name: '',
+                            'subTitle': '',
+                            'originalPrice': 99.98,
+                            'promotePrice': 19.98,
+                            'stock': 99,
+                            category: {'id': 0}
+                        };
+                    });
                 },
-                jump: function(page){
-                    jump(page,vue); //定义在adminHeader.html 中
+                deleteBean: function (id) {
+                    if (!checkDeleteLink())
+                        return;
+                    var url = this.uri + "/" + id;
+                    axios.delete(url).then(function (response) {
+                        if (0 != response.data.length)
+                            alert(response.data);
+                        else
+                            vue.list(0);
+                    });
                 },
-                jumpByNumber: function(start){
-                    jumpByNumber(start,vue);
+                jump: function (page) {
+                    jump(page, vue); //定义在adminHeader.html 中
+                },
+                jumpByNumber: function (start) {
+                    jumpByNumber(start, vue);
                 }
             }
         })
@@ -130,32 +157,32 @@
             <table class="addTable">
                 <tr>
                     <td>产品名称</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
+                    <td><input @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>产品小标题</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.subTitle" type="text"
-                                class="form-control"></td>
+                    <td><input @keyup.enter="add" v-model.trim="bean.subTitle" type="text"
+                               class="form-control"></td>
                 </tr>
                 <tr>
                     <td>原价格</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.originalPrice"  type="text"
-                                class="form-control"></td>
+                    <td><input @keyup.enter="add" v-model.trim="bean.originalPrice" type="text"
+                               class="form-control"></td>
                 </tr>
                 <tr>
                     <td>优惠价格</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.promotePrice" type="text"
-                                class="form-control"></td>
+                    <td><input @keyup.enter="add" v-model.trim="bean.promotePrice" type="text"
+                               class="form-control"></td>
                 </tr>
                 <tr>
                     <td>库存</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.stock"  type="text"
-                                class="form-control"></td>
+                    <td><input @keyup.enter="add" v-model.trim="bean.stock" type="text"
+                               class="form-control"></td>
                 </tr>
 
                 <tr class="submitTR">
                     <td colspan="2" align="center">
-                        <a href="#nowhere"  @click="add" class="btn btn-success">提交</a>
+                        <a href="#nowhere" @click="add" class="btn btn-success">提交</a>
                     </td>
                 </tr>
             </table>
