@@ -8,6 +8,8 @@ import com.vixyock.tmall.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @RestController
 public class ProductController {
     @Autowired ProductService productService;
@@ -29,6 +31,13 @@ public class ProductController {
     @PutMapping("/products")
     public Object update(@RequestBody Product bean) throws Exception {
         productService.update(bean);
+        return bean;
+    }
+
+    @PostMapping("/products")
+    public Product add(@RequestBody Product bean){
+        bean.setCreateDate(new Date());
+        productService.add(bean);
         return bean;
     }
 }
