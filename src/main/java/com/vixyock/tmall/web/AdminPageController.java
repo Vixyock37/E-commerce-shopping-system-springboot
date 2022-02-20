@@ -24,4 +24,5 @@ public class AdminPageController {
     @GetMapping(value = "/admin_property_edit")
     public String editProperty(){return "admin/editProperty";}
 
+
 }

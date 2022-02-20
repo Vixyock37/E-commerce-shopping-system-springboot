@@ -34,4 +34,16 @@ public class PropertyController {
         propertyService.delete(id);
         return null;
     }
+
+    @GetMapping("/properties/{id}")
+    public Property get(@PathVariable("id") int id) throws Exception {
+        Property bean=propertyService.get(id);
+        return bean;
+    }
+
+    @PutMapping("/properties")
+    public Object update(@RequestBody Property bean) throws Exception {
+        propertyService.update(bean);
+        return bean;
+    }
 }
