@@ -53,6 +53,17 @@
                         vue.bean = {id: 0, name: '', category: {id: 0}};
                     });
                 },
+                deleteBean: function (id) {
+                    if(!checkDeleteLink())
+                        return;
+                    var url = this.uri+"/"+id;
+                    axios.delete(url).then(function(response){
+                        if(0!=response.data.length)
+                            alert(response.data);
+                        else
+                            vue.list(0);
+                    });
+                },
             }
         })
     })

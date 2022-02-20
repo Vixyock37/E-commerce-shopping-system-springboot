@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -26,5 +27,11 @@ public class PropertyController {
     public Object add(@RequestBody Property bean) throws Exception {
         propertyService.add(bean);
         return bean;
+    }
+
+    @DeleteMapping("/properties/{id}")
+    public String delete(@PathVariable("id") int id, HttpServletRequest request){
+        propertyService.delete(id);
+        return null;
     }
 }
