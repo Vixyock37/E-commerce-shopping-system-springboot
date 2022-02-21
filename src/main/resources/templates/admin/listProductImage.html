@@ -75,6 +75,15 @@
                         vue.detailFile = null;
                     });
                 },
+                deleteBean:function (id){
+                    if (!checkDeleteLink())
+                        return;
+                    var url = this.uri+"/"+id;
+                    axios.delete(url).then(function (response){
+                        vue.listSingles();
+                        vue.listDetails();
+                    });
+                }
             },
 
         });

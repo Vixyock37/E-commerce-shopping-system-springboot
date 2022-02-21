@@ -28,4 +28,12 @@ public class ProductImageService {
     public void add(ProductImage bean) {
         productImageDAO.save(bean);
     }
+
+    public ProductImage get(int id) {
+        return productImageDAO.findOne(id);
+    }
+
+    public void delete(int id) {
+        productImageDAO.delete(id);
+    }
 }
