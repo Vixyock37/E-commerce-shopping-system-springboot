@@ -24,4 +24,8 @@ public class ProductImageService {
     public List<ProductImage> listDetailProductImages(Product product){
         return productImageDAO.findByProductAndTypeOrderByIdAsc(product,type_detail);
     }
+
+    public void add(ProductImage bean) {
+        productImageDAO.save(bean);
+    }
 }
