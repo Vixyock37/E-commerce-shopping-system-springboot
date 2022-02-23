@@ -3,6 +3,7 @@ package com.vixyock.tmall.web;
 import com.vixyock.tmall.dao.ProductDAO;
 import com.vixyock.tmall.pojo.Category;
 import com.vixyock.tmall.pojo.Product;
+import com.vixyock.tmall.service.ProductImageService;
 import com.vixyock.tmall.service.ProductService;
 import com.vixyock.tmall.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,16 @@ import java.util.Date;
 @RestController
 public class ProductController {
     @Autowired ProductService productService;
+    @Autowired ProductImageService productImageService;
 
     @GetMapping("/categories/{cid}/products")
     public Page4Navigator<Product> list(@PathVariable("cid") int cid, @RequestParam(value = "start", defaultValue = "0") int start,@RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
         start = start<0?0:start;
         Page4Navigator<Product> page =productService.list(cid, start, size,5 );
-
+        productImageService.setFirstProductImages(page.getContent());
+//        for(Product a:page.getContent()){
+//            System.out.println(a.getFirstProductImage().getId());
+//        }
         return page;
     }
 
