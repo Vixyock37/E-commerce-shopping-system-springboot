@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AdminPageController {
+    //分类管理Category
     @GetMapping(value = "/admin")
     public String admin(){
         return "redirect:admin_category_list";
