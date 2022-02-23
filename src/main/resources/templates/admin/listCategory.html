@@ -8,10 +8,10 @@
     //jQuery代码，表示html加载完后执行
     $(function () {
         var data4Vue = {
-            uri: 'categories',  //uri
-            pagination: {},     //Page4Navigator类
-            beans: [],          //Page4Navigator类中的数据集合
-            bean: {id: 0, name: ""},    //存放分类信息
+            uri: 'categories',
+            pagination: {},
+            bean: {id: 0, name: ""},
+            beans: [],
             file: null
         };
 
@@ -54,7 +54,7 @@
                         //重新查询第一页
                         vue.list(0);
                         //还原数据
-                        vue.bean = {id: 0, name: "", hp: '0'};
+                        vue.bean = {id: 0, name: ""};
                         $("#categoryPic").val("");
                         vue.file = null;
                     })
