@@ -4,7 +4,50 @@
 <head th:include="include/admin/adminHeader::html('编辑产品')" ></head>
 <body>
 <div th:replace="include/admin/adminNavigator::html" ></div>
-<script></script>
+<script>
+    $(function (){
+        var data4Vue={
+            uri:'products',
+            listURL:'admin_product_list',
+            bean:'',
+            category:''
+        };
+        //VieModel
+        var vue = new Vue({
+            el:'#workingArea',
+            data:data4Vue,
+            mounted:function (){
+                this.get();
+            },
+            methods:{
+                get:function (){
+                    var id = getUrlParms("id");
+                    var url = this.uri+"/"+id;
+                    axios.get(url).then(function (response){
+                        vue.bean = response.data;
+                        vue.category = vue.bean.category;
+                    });
+                },
+                update:function () {
+                    if(!checkEmpty(this.bean.name, "产品名称"))
+                        return;
+                    if (!checkEmpty(this.bean.subTitle, "小标题"))
+                        return;
+                    if (!checkNumber(this.bean.originalPrice, "原价格"))
+                        return;
+                    if (!checkNumber(this.bean.promotePrice, "优惠价格"))
+                        return;
+                    if (!checkInt(this.bean.stock, "库存"))
+                        return;
+                    var url = this.uri;
+                    axios.put(url,vue.bean).then(function(response){
+                        location.href=vue.listURL+"?cid="+vue.category.id;
+                    });
+                }
+            }
+        });
+    });
+</script>
 <div id="workingArea">
 
     <ol class="breadcrumb">

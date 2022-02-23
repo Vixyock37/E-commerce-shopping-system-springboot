@@ -24,4 +24,20 @@ public class ProductService {
 
         return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
+
+    public Product add(Product bean){
+        return productDAO.save(bean);
+    }
+
+    public Product get(int id) {
+        return productDAO.findOne(id);
+    }
+
+    public void update(Product bean) {
+        productDAO.save(bean);
+    }
+
+    public void delete(int id){
+        productDAO.delete(id);
+    }
 }
