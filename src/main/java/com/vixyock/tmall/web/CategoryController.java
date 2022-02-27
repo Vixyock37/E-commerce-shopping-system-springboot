@@ -28,10 +28,6 @@ public class CategoryController {
 //        System.out.println(page.getContent());
         return page;
     }
-    //    public List<Category> list() throws Exception{
-//        System.out.println(categoryService.list());
-//        return categoryService.list();
-//    }
 
     @PostMapping("/categories")
     public Object add(Category bean, MultipartFile image, HttpServletRequest request) throws IOException {
