@@ -3,6 +3,8 @@ package com.vixyock.tmall.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author ：VIxyock
  * @description：做前台页面的跳转
@@ -75,7 +77,9 @@ public class ForePageController {
         return "fore/search";
     }
     @GetMapping("/forelogout")
-    public String logout( ) {
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
         return "redirect:home";
     }
+
 }
