@@ -4,11 +4,13 @@ import com.vixyock.tmall.pojo.*;
 import com.vixyock.tmall.service.*;
 import com.vixyock.tmall.util.Comparator.*;
 import com.vixyock.tmall.util.Result;
+import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -33,6 +35,8 @@ public class ForeRESTController {
     OrderItemService orderItemService;
     @Autowired
     ReviewService reviewService;
+    @Autowired
+    OrderService orderService;
 
     @GetMapping("/forehome")
     public Object home() {
@@ -237,6 +241,107 @@ public class ForeRESTController {
         if(null==user)
             return Result.fail("未登录");
         orderItemService.delete(oiid);
+        return Result.success();
+    }
+
+    @PostMapping("forecreateOrder")
+    public Object createOrder(@RequestBody Order order,HttpSession session){
+        User user =(User)  session.getAttribute("user");
+        if(null==user)
+            return Result.fail("未登录");
+        String orderCode = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + RandomUtils.nextInt(10000);
+        order.setOrderCode(orderCode);
+        order.setCreateDate(new Date());
+        order.setUser(user);
+        order.setStatus(OrderService.waitPay);
+        List<OrderItem> ois= (List<OrderItem>)  session.getAttribute("ois");
+
+        float total =orderService.add(order,ois);
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("oid", order.getId());
+        map.put("total", total);
+
+        return Result.success(map);
+    }
+
+    @GetMapping("forepayed")
+    public Object payed(int oid) {
+        Order order = orderService.get(oid);
+        order.setStatus(OrderService.waitDelivery);
+        order.setPayDate(new Date());
+        orderService.update(order);
+        return order;
+    }
+
+    @GetMapping("forebought")
+    public Object bought(HttpSession session) {
+        User user =(User)  session.getAttribute("user");
+        if(null==user)
+            return Result.fail("未登录");
+        List<Order> os= orderService.listByUserWithoutDelete(user);
+        orderService.removeOrderFromOrderItem(os);
+        return os;
+    }
+
+    @GetMapping("foreconfirmPay")
+    public Object confirmPay(int oid) {
+        Order o = orderService.get(oid);
+        orderItemService.fill(o);
+        orderService.cacl(o);
+        orderService.removeOrderFromOrderItem(o);
+        return o;
+    }
+
+    @GetMapping("foreorderConfirmed")
+    public Object orderConfirmed( int oid) {
+        Order o = orderService.get(oid);
+        o.setStatus(OrderService.waitReview);
+        o.setConfirmDate(new Date());
+        orderService.update(o);
+        return Result.success();
+    }
+
+    @PutMapping("foredeleteOrder")
+    public Object deleteOrder(int oid){
+        Order o = orderService.get(oid);
+        o.setStatus(OrderService.delete);
+        orderService.update(o);
+        return Result.success();
+    }
+
+    @GetMapping("forereview")
+    public Object review(int oid) {
+        Order o = orderService.get(oid);
+        orderItemService.fill(o);
+        orderService.removeOrderFromOrderItem(o);
+        Product p = o.getOrderItems().get(0).getProduct();
+        List<Review> reviews = reviewService.list(p);
+        productService.setSaleAndReviewNumber(p);
+        Map<String,Object> map = new HashMap<>();
+        map.put("p", p);
+        map.put("o", o);
+        map.put("reviews", reviews);
+
+        return Result.success(map);
+    }
+
+    @PostMapping("foredoreview")
+    public Object doreview( HttpSession session,int oid,int pid,String content) {
+        Order o = orderService.get(oid);
+        o.setStatus(OrderService.finish);
+        orderService.update(o);
+
+        Product p = productService.get(pid);
+        content = HtmlUtils.htmlEscape(content);
+
+        User user =(User)  session.getAttribute("user");
+        Review review = new Review();
+        review.setContent(content);
+        review.setProduct(p);
+        review.setCreateDate(new Date());
+        review.setUser(user);
+        reviewService.add(review);
         return Result.success();
     }
 }
