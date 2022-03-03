@@ -1,0 +1,18 @@
+<!--1 天猫超市连接右侧有4个分类数据-->
+<!--2 竖状导航栏显示17个分类数据-->
+<!--3 每个分类又再对应不同的推荐产品集合-->
+<!--4 中部会显示17个分类-->
+<!--5 每个分类又显示前5款产品-->
+<!--6 每款产品又会显示第一张图片，标题，价格等信息-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/fore/header::html" ></head>
+<body>
+<div id="workingArea">
+  <div th:replace="include/fore/top::html" ></div>
+  <div th:replace="include/fore/search::html" ></div>
+  <div th:replace="include/fore/home/homePage::html" ></div>
+  <div th:replace="include/fore/footer::html" ></div>
+</div>
+</body>
+</html>
