@@ -1,4 +1,4 @@
-# tmall_springboot
+# E-commerce-shopping-system-springboot
 仿天猫整站的一个电商购物系统项目，基于Springboot
 
 到目前为止完成了整个网站功能的开发，包括：
