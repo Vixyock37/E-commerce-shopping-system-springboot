@@ -3,6 +3,8 @@ package com.vixyock.tmall.service;
 import com.vixyock.tmall.dao.OrderItemDAO;
 import com.vixyock.tmall.pojo.Order;
 import com.vixyock.tmall.pojo.OrderItem;
+import com.vixyock.tmall.pojo.Product;
+import com.vixyock.tmall.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +36,39 @@ public class OrderItemService {
         order.setTotalNumber(totalNumber);
     }
 
+    public void add(OrderItem orderItem) {
+        orderItemDAO.save(orderItem);
+    }
+    public OrderItem get(int id) {
+        return orderItemDAO.findOne(id);
+    }
+
+    public void delete(int id) {
+        orderItemDAO.delete(id);
+    }
+
+    public int getSaleCount(Product product) {
+        List<OrderItem> ois =listByProduct(product);
+        int result =0;
+        for (OrderItem oi : ois) {
+            if(null!=oi.getOrder())
+                if(null!= oi.getOrder() && null!=oi.getOrder().getPayDate())
+                    result+=oi.getNumber();
+        }
+        return result;
+    }
+
+    public List<OrderItem> listByProduct(Product product) {
+        return orderItemDAO.findByProduct(product);
+    }
+
     public List<OrderItem> listByOrder(Order order) {
         return orderItemDAO.findByOrderOrderByIdAsc(order);
     }
 
+    public List<OrderItem> listByUser(User user) {
+        return orderItemDAO.findByUserAndOrderIsNull(user);
+    }
+
+    public void update(OrderItem oi) { orderItemDAO.save(oi);}
 }
