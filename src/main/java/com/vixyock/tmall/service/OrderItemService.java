@@ -4,6 +4,7 @@ import com.vixyock.tmall.dao.OrderItemDAO;
 import com.vixyock.tmall.pojo.Order;
 import com.vixyock.tmall.pojo.OrderItem;
 import com.vixyock.tmall.pojo.Product;
+import com.vixyock.tmall.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,4 +66,9 @@ public class OrderItemService {
         return orderItemDAO.findByOrderOrderByIdAsc(order);
     }
 
+    public List<OrderItem> listByUser(User user) {
+        return orderItemDAO.findByUserAndOrderIsNull(user);
+    }
+
+    public void update(OrderItem oi) { orderItemDAO.save(oi);}
 }

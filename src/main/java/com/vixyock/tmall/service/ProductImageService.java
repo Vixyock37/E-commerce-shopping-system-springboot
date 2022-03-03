@@ -1,6 +1,7 @@
 package com.vixyock.tmall.service;
 
 import com.vixyock.tmall.dao.ProductImageDAO;
+import com.vixyock.tmall.pojo.OrderItem;
 import com.vixyock.tmall.pojo.Product;
 import com.vixyock.tmall.pojo.ProductImage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,4 +53,11 @@ public class ProductImageService {
         for(Product product:products)
             setFirstProductImage(product);
     }
+
+    public void setFirstProductImagesOnOrderItems(List<OrderItem> ois) {
+        for (OrderItem orderItem : ois) {
+            setFirstProductImage(orderItem.getProduct());
+        }
+    }
+
 }
